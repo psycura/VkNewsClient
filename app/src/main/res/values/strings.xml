@@ -1,0 +1,9 @@
+<resources>
+    <integer name="com_vk_sdk_AppId">52418027</integer>
+    <string name="app_name">First Compose Project</string>
+    <string name="tmplate_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="navigation_item_main">Home</string>
+    <string name="navigation_item_favorite">Favorites</string>
+    <string name="navigation_item_profile">Profile</string>
+    <string name="login">Login</string>
+</resources>
