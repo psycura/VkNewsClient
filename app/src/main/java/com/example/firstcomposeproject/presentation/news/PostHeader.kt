@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.firstcomposeproject.domain.FeedPost
 
 @Composable
@@ -28,8 +29,8 @@ fun PostHeader(
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(post.avatarResId),
+        AsyncImage(
+            model=post.communityImageUrl,
             contentDescription = null,
             modifier = Modifier
                 .size(50.dp)

@@ -1,17 +1,22 @@
 package com.example.firstcomposeproject.presentation.main
 
-import androidx.lifecycle.ViewModel
-import com.vk.api.sdk.VK
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.vk.api.sdk.VKPreferencesKeyValueStorage
+import com.vk.api.sdk.auth.VKAccessToken
 import com.vk.api.sdk.auth.VKAuthenticationResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class MainViewModel : ViewModel() {
-    private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val _authState = MutableStateFlow<AuthState>(AuthState.NotAuthorized)
     val authState: StateFlow<AuthState> = _authState
 
     init {
-        _authState.value = if (VK.isLoggedIn()) AuthState.Authorized else AuthState.NotAuthorized
+        val storage = VKPreferencesKeyValueStorage(application)
+        val token = VKAccessToken.restore(storage)
+        val loggedIn = token != null && token.isValid
+        _authState.value = if (loggedIn) AuthState.Authorized else AuthState.NotAuthorized
     }
 
     fun performAuthResult(result: VKAuthenticationResult) {

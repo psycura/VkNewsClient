@@ -6,15 +6,19 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.firstcomposeproject.domain.FeedPost
 import com.example.firstcomposeproject.domain.StatisticItem
+import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
 
 @Composable
 fun PostCard(
@@ -27,7 +31,7 @@ fun PostCard(
 ) {
 
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(8.dp)
@@ -36,23 +40,24 @@ fun PostCard(
             Spacer(modifier = Modifier.height(8.dp))
             Text(post.contentText)
             Spacer(modifier = Modifier.height(8.dp))
-            Image(
-                painter = painterResource(post.contentImageResId),
+            AsyncImage(
+                model = post.contentImageUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp),
+                    .wrapContentHeight(),
                 contentScale = ContentScale.FillWidth
             )
             Spacer(modifier = Modifier.height(8.dp))
             Statistics(
                 post.statistics,
-                onLikeClick = { onLikeClick( it) },
-                onShareClick = { onShareClick( it) },
-                onViewsClick = { onViewsClick( it) },
+                onLikeClick = { onLikeClick(it) },
+                onShareClick = { onShareClick(it) },
+                onViewsClick = { onViewsClick(it) },
                 onCommentsClick = { onCommentsClick(it) }
             )
         }
 
     }
 }
+

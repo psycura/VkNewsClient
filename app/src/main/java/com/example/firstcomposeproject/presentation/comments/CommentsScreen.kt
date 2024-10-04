@@ -130,11 +130,3 @@ fun CommentItem(
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun CommentsScreenPreviewLight() {
-    FirstComposeProjectTheme(darkTheme = false) {
-        CommentsScreen(onBackPress = {}, feedPost = FeedPost())
-    }
-}

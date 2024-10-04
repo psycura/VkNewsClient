@@ -12,9 +12,11 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.firstcomposeproject.domain.FeedPost
+import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
 
 @Composable
 fun HomeScreen(
@@ -39,7 +41,6 @@ fun HomeScreen(
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedPosts(
     posts: List<FeedPost>,
@@ -83,5 +84,13 @@ fun FeedPosts(
 
 
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    FirstComposeProjectTheme {
+        HomeScreen(onCommentsClick = {})
     }
 }
