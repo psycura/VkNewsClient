@@ -38,14 +38,14 @@ fun VkNewsMainScreen() {
                 HomeScreen(
                     modifier = Modifier.padding(contentPadding),
                     onCommentsClick = {
-                        navigationState.navigateTo(Screen.Comments.getRouteWithArgs(it))
+                        navigationState.navigateTo(Screen.Comments.getRouteWithArgs(it.id))
                     }
                 )
             },
             commentsScreenContent = {
                 CommentsScreen(
                     onBackPress = { navigationState.navHostController.popBackStack() },
-                    feedPost = it,
+                    feedPostId = it,
                 )
             },
             favoriteScreenContent = {

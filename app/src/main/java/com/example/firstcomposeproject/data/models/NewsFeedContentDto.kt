@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class NewsFeedContentDto(
     @SerialName("items") val posts: List<PostDto>,
-    val groups: List<GroupDto>
+    val groups: List<GroupDto>,
+    @SerialName("next_from") val nextFrom: String?
 )

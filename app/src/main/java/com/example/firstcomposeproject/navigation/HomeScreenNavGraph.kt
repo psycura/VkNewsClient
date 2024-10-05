@@ -6,13 +6,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.example.firstcomposeproject.domain.FeedPost
-import kotlinx.serialization.json.Json
 
 
 fun NavGraphBuilder.homeScreenNavGraph(
     newsFeedScreenContent: @Composable () -> Unit,
-    commentsScreenContent: @Composable (FeedPost) -> Unit,
+    commentsScreenContent: @Composable (feedPostId: Long) -> Unit,
 ) {
     navigation(
         startDestination = Screen.NewsFeed.route,
@@ -26,15 +24,14 @@ fun NavGraphBuilder.homeScreenNavGraph(
         composable(
             route = Screen.Comments.route,
             arguments = listOf(
-                navArgument(Screen.KEY_FEED_POST) {
-                    type = NavType.StringType
+                navArgument(Screen.KEY_FEED_POST_ID) {
+                    type = NavType.LongType
                 }
             )
         ) {
-            val feedPostString = it.arguments?.getString(Screen.KEY_FEED_POST) ?: ""
-            val feedPost = Json.decodeFromString<FeedPost>(feedPostString)
+            val feedPostId = it.arguments?.getLong(Screen.KEY_FEED_POST_ID) ?: 0
 
-            commentsScreenContent(feedPost)
+            commentsScreenContent(feedPostId)
         }
     }
 

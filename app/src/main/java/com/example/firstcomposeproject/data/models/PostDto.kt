@@ -13,9 +13,9 @@ data class PostDto(
     val date: Long,
 
     val likes: LikesDto,
-    val comments:  CommentsDto,
-    val views:  ViewsDto,
-    val reposts:  RepostsDto,
+    val comments: CommentsDto,
+    val views: ViewsDto,
+    val reposts: RepostsDto,
     val attachments: List<AttachmentDto>,
 
-)
+    )

@@ -20,8 +20,6 @@ import com.example.firstcomposeproject.domain.StatisticItem
 fun PostCard(
     modifier: Modifier = Modifier,
     onLikeClick: (StatisticItem) -> Unit,
-    onShareClick: (StatisticItem) -> Unit,
-    onViewsClick: (StatisticItem) -> Unit,
     onCommentsClick: (StatisticItem) -> Unit,
     post: FeedPost,
 ) {
@@ -48,8 +46,6 @@ fun PostCard(
             Statistics(
                 post.statistics,
                 onLikeClick = { onLikeClick(it) },
-                onShareClick = { onShareClick(it) },
-                onViewsClick = { onViewsClick(it) },
                 onCommentsClick = { onCommentsClick(it) },
                 isLiked = post.isLiked
             )

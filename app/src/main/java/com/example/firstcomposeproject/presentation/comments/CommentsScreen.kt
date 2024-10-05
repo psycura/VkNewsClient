@@ -1,11 +1,13 @@
 package com.example.firstcomposeproject.presentation.comments
 
-import androidx.compose.foundation.Image
+import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,9 +15,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,36 +29,61 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.firstcomposeproject.domain.FeedPost
+import coil.compose.AsyncImage
+import com.example.firstcomposeproject.R
 import com.example.firstcomposeproject.domain.PostComment
-import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
+import com.example.firstcomposeproject.ui.theme.DarkBLue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommentsScreen(
     onBackPress: () -> Unit,
-    feedPost: FeedPost
+    feedPostId: Long
 ) {
 
     val viewModel: CommentsViewModel = viewModel(
-        factory = CommentsViewModelFactory(feedPost)
+        factory = CommentsViewModelFactory(
+            feedPostId,
+            application = LocalContext.current.applicationContext as Application
+        )
     )
 
     val screenState = viewModel.screenState.collectAsState()
     val currentState = screenState.value
+
+    if (currentState is CommentsScreenState.Error) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = currentState.errorText)
+        }
+    }
+
+
+    if (currentState is CommentsScreenState.Loading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(color = DarkBLue)
+        }
+    }
 
     if (currentState is CommentsScreenState.Comments) {
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "Comments for post: ${currentState.post.id}")
+                        Text(text = stringResource(R.string.comments))
                     },
                     navigationIcon = {
                         IconButton(onClick = { onBackPress() }) {
@@ -101,15 +130,17 @@ fun CommentItem(
                 .fillMaxWidth()
                 .padding(8.dp),
         ) {
-            Image(
-                painterResource(comment.authorAvatarId),
+            AsyncImage(
+                model = comment.authorAvatarUrl,
                 contentDescription = null,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape),
             )
             Spacer(modifier = Modifier.width(8.dp))
             Column {
                 Text(
-                    "${comment.authorName} CommentID: ${comment.id}",
+                    comment.authorName,
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontSize = 12.sp
                 )

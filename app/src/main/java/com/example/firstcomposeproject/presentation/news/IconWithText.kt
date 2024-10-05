@@ -20,10 +20,15 @@ fun IconWithText(
     iconResId: Int,
     text: String,
     tint: Color = MaterialTheme.colorScheme.onSecondary,
-    onItemClickListener: () -> Unit = {}
+    onItemClickListener: (() -> Unit)? = null
 ) {
+
+    val modifier = if (onItemClickListener != null) {
+        Modifier.clickable { onItemClickListener() }
+    } else Modifier
+
     Row(
-        modifier = Modifier.clickable { onItemClickListener() },
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(

@@ -1,17 +1,29 @@
 package com.example.firstcomposeproject.data.repositories
 
 import android.app.Application
+import android.util.Log
 import com.example.firstcomposeproject.data.mappers.NewsFeedMapper
 import com.example.firstcomposeproject.data.network.ApiFactory
 import com.example.firstcomposeproject.data.network.ApiService
 import com.example.firstcomposeproject.domain.FeedPost
+import com.example.firstcomposeproject.domain.PostComment
 import com.example.firstcomposeproject.domain.StatisticItem
 import com.example.firstcomposeproject.domain.StatisticType
 import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
 import java.lang.IllegalStateException
 
-class NewsFeedRepository(application: Application) {
+class NewsFeedRepository private constructor(application: Application) {
+    companion object {
+
+        @Volatile
+        private var instance: NewsFeedRepository? = null
+
+        fun getInstance(application: Application) =
+            instance ?: synchronized(this) {
+                instance ?: NewsFeedRepository(application).also { instance = it }
+            }
+    }
 
     private val service = ApiService(ApiFactory.client)
     private val mapper = NewsFeedMapper()
@@ -23,14 +35,44 @@ class NewsFeedRepository(application: Application) {
     val feedPosts: List<FeedPost>
         get() = _feedPosts.toList()
 
+    private var nextFrom: String? = null
+
 
     suspend fun loadNewsFeed(): List<FeedPost> {
-        val response = service.getNewsFeed(getAccessToken())
+        val startFrom = nextFrom
+
+        if (startFrom == null && feedPosts.isNotEmpty()) return feedPosts
+
+        val response = if (startFrom == null) {
+            service.getNewsFeed(getAccessToken())
+        } else {
+            service.getNewsFeed(getAccessToken(), startFrom)
+        }
+
+        nextFrom = response.newsFeedContent.nextFrom
 
         val posts = mapper.mapResponseToPosts(response)
         _feedPosts.addAll(posts)
 
-        return posts
+        return feedPosts
+    }
+
+    fun getPostById(feedPostId: Long): FeedPost? {
+        for (post in feedPosts) {
+            Log.d("NewsFeedRepository","Post: ${post.id}")
+        }
+
+        return feedPosts.firstOrNull { it.id == feedPostId }
+    }
+
+    suspend fun getComments(feedPost: FeedPost): List<PostComment> {
+        val response = service.getComments(
+            token = getAccessToken(),
+            itemId = feedPost.id,
+            ownerId = feedPost.communityId
+        )
+
+        return mapper.mapResponseToComments(response)
     }
 
     suspend fun addLike(feedPost: FeedPost) {
@@ -41,7 +83,6 @@ class NewsFeedRepository(application: Application) {
         )
 
         updatePostLikes(feedPost, response.likes.count, true)
-
     }
 
     suspend fun removeLike(feedPost: FeedPost) {
@@ -52,6 +93,16 @@ class NewsFeedRepository(application: Application) {
         )
 
         updatePostLikes(feedPost, response.likes.count, false)
+    }
+
+    suspend fun ignoreItem(feedPost: FeedPost) {
+        service.ignoreItem(
+            token = getAccessToken(),
+            itemId = feedPost.id,
+            ownerId = feedPost.communityId
+        )
+
+        _feedPosts.remove(feedPost)
 
     }
 
@@ -73,6 +124,4 @@ class NewsFeedRepository(application: Application) {
     private fun getAccessToken(): String {
         return token?.accessToken ?: throw IllegalStateException("Token is null")
     }
-
-
 }

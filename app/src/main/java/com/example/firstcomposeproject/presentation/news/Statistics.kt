@@ -15,8 +15,6 @@ import com.example.firstcomposeproject.ui.theme.DarkRed
 fun Statistics(
     statistics: List<StatisticItem>,
     onLikeClick: (StatisticItem) -> Unit,
-    onShareClick: (StatisticItem) -> Unit,
-    onViewsClick: (StatisticItem) -> Unit,
     onCommentsClick: (StatisticItem) -> Unit,
     isLiked: Boolean,
 ) {
@@ -28,7 +26,6 @@ fun Statistics(
             IconWithText(
                 iconResId = R.drawable.ic_views_count,
                 text = formatStatisticCount(countItem.count),
-                onItemClickListener = { onViewsClick(countItem) }
             )
         }
         Row(
@@ -39,7 +36,6 @@ fun Statistics(
             IconWithText(
                 iconResId = R.drawable.ic_share,
                 text = formatStatisticCount(sharesItem.count),
-                onItemClickListener = { onShareClick(sharesItem) }
             )
             val commentsItem = statistics.getItemByType(StatisticType.COMMENTS)
             IconWithText(

@@ -4,6 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NewsFeedResponseDto(
-    @SerialName("response") val newsFeedContent: NewsFeedContentDto,
+data class IgnoreItemResponseDto (
+    @SerialName("response") val ignoreItem: IgnoreItemDto
 )

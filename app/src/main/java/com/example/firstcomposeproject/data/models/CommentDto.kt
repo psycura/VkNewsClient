@@ -4,6 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NewsFeedResponseDto(
-    @SerialName("response") val newsFeedContent: NewsFeedContentDto,
+data class CommentDto(
+    val id: Long,
+    @SerialName("from_id") val fromId: Long,
+    val date: Long,
+    val text: String,
 )
