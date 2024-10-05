@@ -5,9 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PostDto(
-    @SerialName("post_id")val id: String,
+    @SerialName("post_id")val id: Long,
 
-    @SerialName("is_favorite") val isFavorite: Boolean,
     @SerialName("source_id") val communityId: Long,
 
     val text: String,

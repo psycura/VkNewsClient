@@ -1,6 +1,5 @@
 package com.example.firstcomposeproject.presentation.news
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,13 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.firstcomposeproject.domain.FeedPost
 import com.example.firstcomposeproject.domain.StatisticItem
-import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
 
 @Composable
 fun PostCard(
@@ -54,7 +50,8 @@ fun PostCard(
                 onLikeClick = { onLikeClick(it) },
                 onShareClick = { onShareClick(it) },
                 onViewsClick = { onViewsClick(it) },
-                onCommentsClick = { onCommentsClick(it) }
+                onCommentsClick = { onCommentsClick(it) },
+                isLiked = post.isLiked
             )
         }
 

@@ -1,18 +1,11 @@
 package com.example.firstcomposeproject.presentation.news
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.firstcomposeproject.data.mappers.NewsFeedMapper
-import com.example.firstcomposeproject.data.network.ApiFactory
-import com.example.firstcomposeproject.data.network.ApiService
+import com.example.firstcomposeproject.data.repositories.NewsFeedRepository
 import com.example.firstcomposeproject.domain.FeedPost
 import com.example.firstcomposeproject.domain.StatisticItem
-import com.vk.api.sdk.VKPreferencesKeyValueStorage
-import com.vk.api.sdk.auth.VKAccessToken
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,9 +15,7 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
     private val _screenState = MutableStateFlow<NewsFeedScreenState>(NewsFeedScreenState.Initial)
     val screenState: StateFlow<NewsFeedScreenState> = _screenState
 
-    private val service = ApiService(ApiFactory.client)
-    private val vkStorage = VKPreferencesKeyValueStorage(application)
-    private val mapper = NewsFeedMapper()
+    private val repository = NewsFeedRepository(application)
 
     init {
         loadPosts()
@@ -34,13 +25,21 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
     private fun loadPosts() {
 
         viewModelScope.launch {
-            val token = VKAccessToken.restore(vkStorage) ?: return@launch
-            val response = service.getNewsFeed(token.accessToken)
-
-            Log.d("NewsFeedViewModel", "loadPosts: $response")
-            val feedPosts = mapper.mapResponseToPosts(response)
-
+            val feedPosts = repository.loadNewsFeed()
             _screenState.value = NewsFeedScreenState.Posts(feedPosts)
+        }
+    }
+
+    fun changeLikeStatus(feedPost: FeedPost) {
+        viewModelScope.launch {
+            if (feedPost.isLiked) {
+                repository.removeLike(feedPost)
+            } else {
+                repository.addLike(feedPost)
+            }
+
+            _screenState.value = NewsFeedScreenState.Posts(repository.feedPosts)
+
         }
     }
 

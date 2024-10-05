@@ -17,10 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.firstcomposeproject.presentation.comments.CommentsScreen
 import com.example.firstcomposeproject.navigation.AppNavGraph
 import com.example.firstcomposeproject.navigation.Screen
 import com.example.firstcomposeproject.navigation.rememberNavigationState
+import com.example.firstcomposeproject.presentation.comments.CommentsScreen
 import com.example.firstcomposeproject.presentation.news.HomeScreen
 import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
 
@@ -29,7 +29,7 @@ fun VkNewsMainScreen() {
     val navigationState = rememberNavigationState()
 
     Scaffold(
-        bottomBar = { BottomBar(navigationState) }
+        bottomBar = { BottomBar(navigationState) },
     )
     { contentPadding ->
         AppNavGraph(

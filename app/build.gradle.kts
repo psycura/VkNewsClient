@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.bundles.ktor)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.kotlinx.datetime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

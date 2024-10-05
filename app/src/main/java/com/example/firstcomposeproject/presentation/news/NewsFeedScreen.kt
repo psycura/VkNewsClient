@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -78,7 +77,7 @@ fun FeedPosts(
                     onShareClick = { vm.updatePostStatisticsCount(post, it) },
                     onViewsClick = { vm.updatePostStatisticsCount(post, it) },
                     onCommentsClick = { onCommentsClick(post) },
-                    onLikeClick = { vm.updatePostStatisticsCount(post, it) }
+                    onLikeClick = { vm.changeLikeStatus(post) }
                 )
             }
 

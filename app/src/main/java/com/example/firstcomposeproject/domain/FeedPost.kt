@@ -11,13 +11,15 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 data class FeedPost(
-    val id: String,
+    val id: Long,
+    val communityId: Long,
     val communityName: String,
     val publicationDate: String,
     val communityImageUrl: String,
     val contentText: String,
     val contentImageUrl: String?,
     val statistics: List<StatisticItem>,
+    val isLiked: Boolean
 ) {
     companion object {
         val NavigationType: NavType<FeedPost> = object : NavType<FeedPost>(false) {

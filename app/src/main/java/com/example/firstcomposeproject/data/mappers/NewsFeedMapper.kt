@@ -5,6 +5,11 @@ import com.example.firstcomposeproject.domain.FeedPost
 import com.example.firstcomposeproject.domain.StatisticItem
 import com.example.firstcomposeproject.domain.StatisticType
 import kotlin.math.absoluteValue
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toJavaLocalDateTime
+import kotlinx.datetime.toLocalDateTime
+import java.time.format.DateTimeFormatter
 
 class NewsFeedMapper {
     fun mapResponseToPosts(response: NewsFeedResponseDto): List<FeedPost> {
@@ -18,8 +23,9 @@ class NewsFeedMapper {
 
             val feedPost = FeedPost(
                 id = post.id,
+                communityId = post.communityId,
                 communityName = group.name,
-                publicationDate = post.date.toString(),
+                publicationDate = mapTimestampToDate(post.date),
                 communityImageUrl = group.imageUrl,
                 contentText = post.text,
                 contentImageUrl = post.attachments.firstOrNull()?.photo?.photoUrls?.lastOrNull()?.url,
@@ -28,7 +34,8 @@ class NewsFeedMapper {
                     StatisticItem(type = StatisticType.COMMENTS, count = post.comments.count),
                     StatisticItem(type = StatisticType.VIEWS, count = post.views.count),
                     StatisticItem(type = StatisticType.SHARES, count = post.reposts.count),
-                )
+                ),
+                isLiked = post.likes.userLikes > 0,
             )
 
             result.add(feedPost)
@@ -36,5 +43,15 @@ class NewsFeedMapper {
 
         return result
 
+    }
+
+    private fun mapTimestampToDate(timestamp: Long): String {
+        val formatPattern = "d MMMM, yyyy, hh:mm"
+
+        val date = Instant.fromEpochSeconds(timestamp)
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .toJavaLocalDateTime()
+
+        return date.format(DateTimeFormatter.ofPattern(formatPattern))
     }
 }
