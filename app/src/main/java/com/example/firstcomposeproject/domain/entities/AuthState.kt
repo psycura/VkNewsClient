@@ -1,4 +1,4 @@
-package com.example.firstcomposeproject.presentation.main
+package com.example.firstcomposeproject.domain.entities
 
 
 sealed class AuthState {

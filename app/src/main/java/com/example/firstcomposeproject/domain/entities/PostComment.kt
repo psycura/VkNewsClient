@@ -1,4 +1,4 @@
-package com.example.firstcomposeproject.domain
+package com.example.firstcomposeproject.domain.entities
 
 import kotlinx.serialization.Serializable
 

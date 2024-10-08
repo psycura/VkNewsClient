@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.firstcomposeproject.domain.entities.AuthState
 
 import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
 import com.vk.api.sdk.VK
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
                 val launcher = rememberLauncherForActivityResult(
                     contract = VK.getVKAuthActivityResultContract()
                 ) {
-                    viewModel.performAuthResult(it)
+                    viewModel.performAuthResult()
                 }
 
                 when (authState.value) {

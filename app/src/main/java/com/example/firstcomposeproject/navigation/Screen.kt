@@ -2,9 +2,6 @@ package com.example.firstcomposeproject.navigation
 
 import android.net.Uri
 import android.util.Log
-import com.example.firstcomposeproject.domain.FeedPost
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 sealed class Screen(
     val route: String,

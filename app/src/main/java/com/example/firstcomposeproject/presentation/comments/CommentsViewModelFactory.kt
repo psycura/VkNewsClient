@@ -3,7 +3,6 @@ package com.example.firstcomposeproject.presentation.comments
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.firstcomposeproject.domain.FeedPost
 
 @Suppress("UNCHECKED_CAST")
 class CommentsViewModelFactory(

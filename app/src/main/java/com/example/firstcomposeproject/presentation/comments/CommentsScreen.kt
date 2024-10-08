@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.firstcomposeproject.R
-import com.example.firstcomposeproject.domain.PostComment
+import com.example.firstcomposeproject.domain.entities.PostComment
 import com.example.firstcomposeproject.ui.theme.DarkBLue
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +56,7 @@ fun CommentsScreen(
         )
     )
 
-    val screenState = viewModel.screenState.collectAsState()
+    val screenState = viewModel.screenState.collectAsState(CommentsScreenState.Initial)
     val currentState = screenState.value
 
     if (currentState is CommentsScreenState.Error) {

@@ -7,8 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.firstcomposeproject.R
-import com.example.firstcomposeproject.domain.StatisticItem
-import com.example.firstcomposeproject.domain.StatisticType
+import com.example.firstcomposeproject.domain.entities.StatisticItem
+import com.example.firstcomposeproject.domain.entities.StatisticType
 import com.example.firstcomposeproject.ui.theme.DarkRed
 
 @Composable

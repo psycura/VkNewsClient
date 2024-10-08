@@ -1,13 +1,12 @@
 package com.example.firstcomposeproject.data.mappers
 
-import android.util.Log
 import androidx.compose.ui.util.fastFirstOrNull
 import com.example.firstcomposeproject.data.models.CommentsResponseDto
 import com.example.firstcomposeproject.data.models.NewsFeedResponseDto
-import com.example.firstcomposeproject.domain.FeedPost
-import com.example.firstcomposeproject.domain.PostComment
-import com.example.firstcomposeproject.domain.StatisticItem
-import com.example.firstcomposeproject.domain.StatisticType
+import com.example.firstcomposeproject.domain.entities.FeedPost
+import com.example.firstcomposeproject.domain.entities.PostComment
+import com.example.firstcomposeproject.domain.entities.StatisticItem
+import com.example.firstcomposeproject.domain.entities.StatisticType
 import kotlin.math.absoluteValue
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone

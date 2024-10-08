@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.firstcomposeproject.domain.FeedPost
+import com.example.firstcomposeproject.domain.entities.FeedPost
 import com.example.firstcomposeproject.ui.theme.DarkBLue
 import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
 
@@ -32,7 +32,7 @@ fun HomeScreen(
 ) {
     val viewModel: NewsFeedViewModel = viewModel()
 
-    val screenState = viewModel.screenState.collectAsState()
+    val screenState = viewModel.screenState.collectAsState(NewsFeedScreenState.Initial)
 
     when (val state = screenState.value) {
         is NewsFeedScreenState.Posts -> FeedPosts(

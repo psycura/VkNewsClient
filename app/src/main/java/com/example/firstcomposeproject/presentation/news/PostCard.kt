@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.firstcomposeproject.domain.FeedPost
-import com.example.firstcomposeproject.domain.StatisticItem
+import com.example.firstcomposeproject.domain.entities.FeedPost
+import com.example.firstcomposeproject.domain.entities.StatisticItem
 
 @Composable
 fun PostCard(
