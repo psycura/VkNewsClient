@@ -2,7 +2,9 @@ package com.example.firstcomposeproject.domain.usecases
 
 import com.example.firstcomposeproject.domain.entities.FeedPost
 import com.example.firstcomposeproject.domain.repositories.NewsFeedRepository
+import org.koin.core.annotation.Factory
 
+@Factory
 class ChangeLikeStatusUseCase(
     private val repository: NewsFeedRepository
 ) {

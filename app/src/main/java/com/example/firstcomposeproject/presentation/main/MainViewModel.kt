@@ -1,19 +1,19 @@
 package com.example.firstcomposeproject.presentation.main
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.firstcomposeproject.data.repositories.NewsFeedRepositoryImpl
 import com.example.firstcomposeproject.domain.usecases.CheckAuthStateUseCase
 import com.example.firstcomposeproject.domain.usecases.GetAuthStateUseCase
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+@KoinViewModel
+class MainViewModel() : ViewModel(), KoinComponent {
 
-    private val repository = NewsFeedRepositoryImpl.getInstance(application)
-
-    private val getAuthStateUseCase = GetAuthStateUseCase(repository)
-    private val checkAuthStateUseCase = CheckAuthStateUseCase(repository)
+    private val getAuthStateUseCase: GetAuthStateUseCase by inject()
+    private val checkAuthStateUseCase: CheckAuthStateUseCase by inject()
 
     val authState = getAuthStateUseCase()
 

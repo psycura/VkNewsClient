@@ -1,6 +1,5 @@
 package com.example.firstcomposeproject.presentation.comments
 
-import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,15 +31,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.firstcomposeproject.R
 import com.example.firstcomposeproject.domain.entities.PostComment
 import com.example.firstcomposeproject.ui.theme.DarkBLue
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,11 +48,8 @@ fun CommentsScreen(
     feedPostId: Long
 ) {
 
-    val viewModel: CommentsViewModel = viewModel(
-        factory = CommentsViewModelFactory(
-            feedPostId,
-            application = LocalContext.current.applicationContext as Application
-        )
+    val viewModel: CommentsViewModel = koinViewModel(
+        parameters = { parametersOf(feedPostId) }
     )
 
     val screenState = viewModel.screenState.collectAsState(CommentsScreenState.Initial)
@@ -157,7 +153,6 @@ fun CommentItem(
                     fontSize = 12.sp
                 )
             }
-
         }
     }
 }

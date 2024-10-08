@@ -1,6 +1,6 @@
 [versions]
 agp = "8.6.1"
-kotlin = "1.9.0"
+kotlin = "2.0.10"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -15,6 +15,9 @@ vk = "4.1.0"
 ktor = "2.3.12"
 okhttp = "5.0.0-alpha.10"
 kotlinxDatetime = "0.6.0"
+koin = "4.0.0"
+koin_ksp = "1.4.0-RC4"
+ksp = "2.0.10-1.0.24"
 
 
 [libraries]
@@ -39,6 +42,13 @@ androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "li
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin_ksp" }
+koin-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin_ksp" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+koin-coroutines = { module = "io.insert-koin:koin-core-coroutines", version.ref = "koin" }
 
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
@@ -53,6 +63,9 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 
 [bundles]
 ktor = [
@@ -61,4 +74,11 @@ ktor = [
     "ktor-client-auth",
     "ktor-client-logging",
     "ktor-serialization-kotlinx-json",
+]
+koin = [
+    "koin-core",
+    "koin-android",
+    "koin-compose",
+    "koin-compose-viewmodel",
+    "koin-coroutines",
 ]

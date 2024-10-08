@@ -17,28 +17,20 @@ import com.vk.api.sdk.auth.VKAccessToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.stateIn
+
+import org.koin.core.annotation.Single
 import java.lang.IllegalStateException
 
-class NewsFeedRepositoryImpl private constructor(application: Application) : NewsFeedRepository {
+@Single
+class NewsFeedRepositoryImpl (application: Application) : NewsFeedRepository {
     companion object {
-
-        @Volatile
-        private var instance: NewsFeedRepositoryImpl? = null
-
-        fun getInstance(application: Application) =
-            instance ?: synchronized(this) {
-                instance ?: NewsFeedRepositoryImpl(application).also { instance = it }
-            }
-
         private const val RETRY_TIMEOUT_MS = 3000L
-
     }
 
     private val coroutineScope = CoroutineScope(Dispatchers.Default)

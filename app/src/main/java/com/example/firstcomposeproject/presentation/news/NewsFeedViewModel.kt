@@ -1,10 +1,8 @@
 package com.example.firstcomposeproject.presentation.news
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.firstcomposeproject.data.repositories.NewsFeedRepositoryImpl
 import com.example.firstcomposeproject.domain.entities.FeedPost
 import com.example.firstcomposeproject.domain.usecases.ChangeLikeStatusUseCase
 import com.example.firstcomposeproject.domain.usecases.DeletePostUseCase
@@ -17,14 +15,16 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class NewsFeedViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = NewsFeedRepositoryImpl.getInstance(application)
-    private val getNewsFeedUseCase = GetNewsFeedUseCase(repository)
-    private val changeLikeStatusUseCase = ChangeLikeStatusUseCase(repository)
-    private val deletePostUseCase = DeletePostUseCase(repository)
-    private val loadNextDataUseCase = LoadNextDataUseCase(repository)
+@KoinViewModel
+class NewsFeedViewModel() : ViewModel(), KoinComponent {
+    private val getNewsFeedUseCase: GetNewsFeedUseCase by inject()
+    private val changeLikeStatusUseCase: ChangeLikeStatusUseCase by inject()
+    private val deletePostUseCase: DeletePostUseCase by inject()
+    private val loadNextDataUseCase: LoadNextDataUseCase by inject()
 
     private val newsFeedFlow = getNewsFeedUseCase()
 

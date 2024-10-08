@@ -2,6 +2,14 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
+}
+
+
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_USE_COMPOSE_VIEWMODEL","true")
 }
 
 android {
@@ -48,6 +56,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    sourceSets.all {
+        java.srcDirs("build/generated/ksp/main/kotlin")
+    }
 }
 
 dependencies {
@@ -67,6 +79,9 @@ dependencies {
     implementation(libs.vk.sdk.core)
     implementation(libs.vk.sdk.api)
     implementation(libs.bundles.ktor)
+    implementation(libs.bundles.koin)
+    implementation(libs.koin.annotations)
+    ksp(libs.koin.compiler)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.kotlinx.datetime)

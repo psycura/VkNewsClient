@@ -20,17 +20,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.firstcomposeproject.domain.entities.FeedPost
 import com.example.firstcomposeproject.ui.theme.DarkBLue
 import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onCommentsClick: (FeedPost) -> Unit,
+    viewModel: NewsFeedViewModel = koinViewModel()
 ) {
-    val viewModel: NewsFeedViewModel = viewModel()
 
     val screenState = viewModel.screenState.collectAsState(NewsFeedScreenState.Initial)
 

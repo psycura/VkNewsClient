@@ -1,21 +1,23 @@
 package com.example.firstcomposeproject.presentation.comments
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
-import com.example.firstcomposeproject.data.repositories.NewsFeedRepositoryImpl
 import com.example.firstcomposeproject.domain.entities.FeedPost
 import com.example.firstcomposeproject.domain.usecases.GetCommentsUseCase
 import com.example.firstcomposeproject.domain.usecases.GetPostUseCase
 import kotlinx.coroutines.flow.map
+import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.InjectedParam
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
+@KoinViewModel
 class CommentsViewModel(
-    application: Application,
+    @InjectedParam
     feedPostId: Long
-) : ViewModel() {
-    private val repository = NewsFeedRepositoryImpl.getInstance(application)
+) : ViewModel(), KoinComponent {
 
-    private val getCommentsUseCase = GetCommentsUseCase(repository)
-    private val getPostUseCase = GetPostUseCase(repository)
+    private val getCommentsUseCase: GetCommentsUseCase by inject()
+    private val getPostUseCase: GetPostUseCase by inject()
 
     private var feedPost: FeedPost? = null
 
