@@ -12,8 +12,10 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
+import org.koin.core.annotation.Factory
 import java.time.format.DateTimeFormatter
 
+@Factory
 class NewsFeedMapper {
     fun mapResponseToPosts(response: NewsFeedResponseDto): List<FeedPost> {
         val result = mutableListOf<FeedPost>()

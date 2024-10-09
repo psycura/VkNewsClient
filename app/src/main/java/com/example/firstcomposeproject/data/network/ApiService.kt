@@ -4,18 +4,20 @@ import com.example.firstcomposeproject.data.models.ChangeLikesResponseDto
 import com.example.firstcomposeproject.data.models.CommentsResponseDto
 import com.example.firstcomposeproject.data.models.IgnoreItemResponseDto
 import com.example.firstcomposeproject.data.models.NewsFeedResponseDto
-import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import org.koin.core.annotation.Single
 
 
-class ApiService(private val client: HttpClient) {
-
+@Single
+class ApiService() {
     private companion object {
         const val BASE_URL = "https://api.vk.ru/method/"
         const val API_VER = "5.199"
         const val ACCESS_TOKEN_KEY = "access_token"
     }
+
+    private val client = ApiFactory.client
 
     suspend fun getComments(
         token: String,

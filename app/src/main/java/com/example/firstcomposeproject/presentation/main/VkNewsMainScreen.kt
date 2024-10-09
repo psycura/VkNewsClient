@@ -39,7 +39,7 @@ fun VkNewsMainScreen() {
                     modifier = Modifier.padding(contentPadding),
                     onCommentsClick = {
                         navigationState.navigateTo(Screen.Comments.getRouteWithArgs(it.id))
-                    }
+                    },
                 )
             },
             commentsScreenContent = {

@@ -18,12 +18,11 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.firstcomposeproject.domain.entities.FeedPost
 import com.example.firstcomposeproject.ui.theme.DarkBLue
-import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
 import org.koin.androidx.compose.koinViewModel
+
 
 @Composable
 fun HomeScreen(
@@ -31,7 +30,6 @@ fun HomeScreen(
     onCommentsClick: (FeedPost) -> Unit,
     viewModel: NewsFeedViewModel = koinViewModel()
 ) {
-
     val screenState = viewModel.screenState.collectAsState(NewsFeedScreenState.Initial)
 
     when (val state = screenState.value) {
@@ -42,18 +40,14 @@ fun HomeScreen(
             onCommentsClick = onCommentsClick,
             nextDataIsLoading = state.nextDataIsLoading
         )
-
         NewsFeedScreenState.Loading -> Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(color = DarkBLue)
         }
-
         NewsFeedScreenState.Initial -> {}
     }
-
-
 }
 
 @Composable
@@ -111,13 +105,5 @@ fun FeedPosts(
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    FirstComposeProjectTheme {
-        HomeScreen(onCommentsClick = {})
     }
 }

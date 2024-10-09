@@ -27,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,11 +42,10 @@ import com.example.firstcomposeproject.ui.theme.DarkBLue
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommentsScreen(
     onBackPress: () -> Unit,
-    feedPostId: Long
+    feedPostId: Long,
 ) {
 
     val viewModel: CommentsViewModel = koinViewModel(
@@ -53,6 +53,18 @@ fun CommentsScreen(
     )
 
     val screenState = viewModel.screenState.collectAsState(CommentsScreenState.Initial)
+    CommentsScreenContent(
+        onBackPress = onBackPress,
+        screenState = screenState
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CommentsScreenContent(
+    onBackPress: () -> Unit,
+    screenState: State<CommentsScreenState>
+) {
     val currentState = screenState.value
 
     if (currentState is CommentsScreenState.Error) {
@@ -112,8 +124,6 @@ fun CommentsScreen(
             }
         }
     }
-
-
 }
 
 @Composable

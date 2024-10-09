@@ -3,7 +3,6 @@ package com.example.firstcomposeproject.data.repositories
 import android.app.Application
 import android.util.Log
 import com.example.firstcomposeproject.data.mappers.NewsFeedMapper
-import com.example.firstcomposeproject.data.network.ApiFactory
 import com.example.firstcomposeproject.data.network.ApiService
 import com.example.firstcomposeproject.domain.entities.AuthState
 import com.example.firstcomposeproject.domain.entities.FeedPost
@@ -28,15 +27,16 @@ import org.koin.core.annotation.Single
 import java.lang.IllegalStateException
 
 @Single
-class NewsFeedRepositoryImpl (application: Application) : NewsFeedRepository {
+class NewsFeedRepositoryImpl(
+    application: Application,
+    private val mapper: NewsFeedMapper,
+    private val service: ApiService
+) : NewsFeedRepository {
     companion object {
         private const val RETRY_TIMEOUT_MS = 3000L
     }
 
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
-
-    private val service = ApiService(ApiFactory.client)
-    private val mapper = NewsFeedMapper()
 
     private val vkStorage = VKPreferencesKeyValueStorage(application)
     private val token
