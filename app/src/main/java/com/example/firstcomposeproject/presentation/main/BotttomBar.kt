@@ -1,6 +1,6 @@
 package com.example.firstcomposeproject.presentation.main
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -14,6 +14,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.firstcomposeproject.navigation.NavigationState
 
+@SuppressLint("RestrictedApi")
 @Composable
 fun BottomBar(
     navigationState: NavigationState,
@@ -30,16 +31,14 @@ fun BottomBar(
 
         items.forEach { item ->
             val selected = navBackStackEntry?.destination?.hierarchy?.any {
-                Log.d("CURRENT_NAV_DESTINATION","$it")
-
-                it.route == item.screen.route
-            } ?: false
+                it.route == item.route::class.qualifiedName
+            } == true
 
             NavigationBarItem(
                 selected = selected,
                 onClick = {
                     if (!selected) {
-                        navigationState.navigateTo(item.screen.route)
+                        navigationState.navigateTo(item.route)
                     }
                 },
                 icon = { Icon(item.icon, contentDescription = null) },

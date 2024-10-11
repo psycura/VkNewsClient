@@ -9,7 +9,6 @@ enum class StatisticType {
     LIKES
 }
 
-
 @Serializable
 data class StatisticItem(
     val type: StatisticType,

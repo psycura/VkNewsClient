@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.firstcomposeproject.navigation.AppNavGraph
-import com.example.firstcomposeproject.navigation.Screen
+import com.example.firstcomposeproject.navigation.Route
 import com.example.firstcomposeproject.navigation.rememberNavigationState
 import com.example.firstcomposeproject.presentation.comments.CommentsScreen
 import com.example.firstcomposeproject.presentation.news.HomeScreen
@@ -38,7 +38,7 @@ fun VkNewsMainScreen() {
                 HomeScreen(
                     modifier = Modifier.padding(contentPadding),
                     onCommentsClick = {
-                        navigationState.navigateTo(Screen.Comments.getRouteWithArgs(it.id))
+                        navigationState.navigateTo(Route.CommentsRoute(it.id))
                     },
                 )
             },

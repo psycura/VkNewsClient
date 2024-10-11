@@ -20,11 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.firstcomposeproject.R
 import com.example.firstcomposeproject.ui.theme.DarkBLue
-import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
 
 @Composable
 fun LoginScreen(
@@ -57,13 +55,5 @@ fun LoginScreen(
                 Text(text = stringResource(R.string.login))
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    FirstComposeProjectTheme {
-        LoginScreen(onLoginClick = {})
     }
 }
